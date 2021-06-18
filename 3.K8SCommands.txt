@@ -1,0 +1,78 @@
+https://kubernetes.io/docs/concepts
+https://kubernetes.github.io/ingress-nginx/deploy
+
+minikube status
+kubectl cluster-info
+kubectl apply -f <filename.yaml>
+kubectl apply -f <directoryname>/<filename.yaml>
+kubectl apply -f <directoryname>  ----applies all yaml files in this directory
+kubectl get pods
+kubectl get pods -o wide
+kubectl get services
+kubectl get deployments
+kubectl get namespaces
+kubectl delete -f <filename.yaml>
+kubectl delete deployment <nameofdeployment>
+kubectl delete service <servicename>
+minikube ip
+kubectl describe <objecttype> <objectname>
+kubectl describe pods
+kubectl set image deployment/<nameofdeployment> <containername>=<newdockerimagetagwithversion>
+minikube docker-env
+eval $(minikube docker-env)        #This is for local docker client to connect to minikubes docker client if minikube is installed in the same server as docker
+
+kubectl logs <nameofpod>
+kubectl logs <nameofdeployment>
+kubectl exec -it <nameofpod> sh
+kubectl exec -it <nameofdeployment> sh
+
+kubectl run --image=<imagename> <deploymentname>
+kubectl expose pod <nameofpod> --port=<portnumber> --target-port=<portnumber> --type=LoadBalancer/NodePort/ClusterIP
+
+Kubernetes Volumes
+-------------------------
+Volumes/Persistent Volume/Persistent Volumes claim - PVC - for Persistent Databases storage
+Volume life cycle is at Pod level
+Persistent Volume life cycle is at Node level
+
+Statistically provisioned Persistent Volume/Dynamically provisioned Persistent Volume (on fly creation)
+
+kubectl get storageclass
+kubectl describe storageclass
+kubectl get pv
+kubectl get pvc
+
+
+kubectl create <typeofobect> <subtypeofobject> <nameofobject> <detailsofobject>
+kubectl create secret generic <secretname> --from-literal key=<value>
+kubectl create secret docker-registry <secretname> --from-literal key=<value>
+kubectl create secret tls <secretname> --from-literal key=<value>
+kubectl create secret generic <secretname> <detailsinfilename>
+
+kubectl create secret generic pgpasswrd --from-literal PGPASSWORD=Bismillah786 REDISPASSWORD=Myredis235?
+kubectl get secrets
+
+kubectl get pods -n ingress-nginx
+
+minikube start --driver=hyperv
+kubectl proxy
+
+minikube start --driver=virtualbox
+minikube dashboard
+
+
+kubectl delete -f k8s
+kubectl apply -f k8s/
+
+kubectl config view users
+kubectl config view serviceaccounts
+
+
+kubectl create serviceaccount --namespace <nameofnamespace> <nameofaccount>
+kubectl create serviceaccount --namespace kube-system tiller
+
+kubectl create clusterrolebinding <nameofclusterole> --clusterrole=<nameofroletobeassigned> --serviceaccount=<nameofnamespace>:<nameofaccount>
+kubectl create clusterrolebinding tiller-cluster-role --clusterrole=cluster-admin --serviceaccount=kube-system:tiller
+
+helm init --service-account tiller --upgrade
+helm install stable/nginx-ingress --name my-nginx --set rbac.create=true

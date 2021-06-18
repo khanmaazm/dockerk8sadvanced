@@ -1,0 +1,20 @@
+docker login dockercontregfork8s.azurecr.io
+   Use User and Password in Keys section of Docker Registry
+
+docker build -t dockercontregfork8s.azurecr.io/client .
+
+docker push  dockercontregfork8s.azurecr.io/client
+
+docker build -t dockercontregfork8s.azurecr.io/worker .
+
+docker push  dockercontregfork8s.azurecr.io/worker
+
+docker build -t dockercontregfork8s.azurecr.io/server .
+
+docker push  dockercontregfork8s.azurecr.io/server
+
+docker build -t dockercontregfork8s.azurecr.io/nginx .
+
+docker push  dockercontregfork8s.azurecr.io/nginx
+
+

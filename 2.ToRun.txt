@@ -1,0 +1,33 @@
+kubectl create secret generic pgpassword --from-literal PGPASSWORD=mypostgresspwd
+
+#Installing NGINX in different environments is at https://kubernetes.github.io/ingress-nginx/deploy/, Below are 2 options
+#Install NGINX INGRESS DIRECTLY on Azure
+----------------------------------------
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v0.44.0/deploy/static/provider/cloud/deploy.yaml
+kubectl get pods -n ingress-nginx
+kubectl get pods -n ingress-nginx -l app.kubernetes.io/name=ingress-nginx --watch
+kubectl apply -f 14.ingress-service.yaml
+
+#INSTALL NGINX INGRESS USING HELM
+----------------------------------------
+# Create a namespace for your ingress resources
+kubectl create namespace ingress-basic
+# Add the ingress-nginx repository
+helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+# Use Helm to deploy an NGINX ingress controller
+helm install nginx-ingress ingress-nginx/ingress-nginx --namespace ingress-basic --set controller.replicaCount=2 --set controller.nodeSelector."beta\.kubernetes\.io/os"=linux --set defaultBackend.nodeSelector."beta\.kubernetes\.io/os"=linux --set  controller.admissionWebhooks.patch.nodeSelector."beta\.kubernetes\.io/os"=linux
+
+
+https://docs.microsoft.com/en-us/azure/aks/ingress-basic
+https://kubernetes.github.io/ingress-nginx/deploy/
+
+
+minikube addons enable ingress
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v0.44.0/deploy/static/provider/cloud/deploy.yaml
+kubectl apply -f k8s
+
+kubectl get pods -n ingress-nginx
+
+kubectl get pods -n ingress-nginx -l app.kubernetes.io/name=ingress-nginx --watch
+
+az --version
